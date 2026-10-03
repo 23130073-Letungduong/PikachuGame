@@ -1,0 +1,107 @@
+/* ===== Phần chữ phía trên ===== */
+#tieu-de {
+    text-align: center;
+    color: #e6a100;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#diem-so {
+    text-align: center;
+    font-size: 22px;
+}
+
+#khu-nut {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* ===== Thông báo thắng ===== */
+#thong-bao {
+    width: 500px;
+    margin: auto;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* ===== Bảng game (thẻ table) ===== */
+/* margin: auto để bảng nằm giữa trang */
+#bang-game table {
+    margin: auto;
+    margin-bottom: 30px;
+    background-color: #e9ecef;
+}
+
+#bang-game td {
+    padding: 1px;
+}
+
+/* ===== Một ô trong bảng ===== */
+/* Ô có hình */
+.o {
+    width: 44px;
+    height: 46px;
+    padding: 2px;
+    border: 1px solid #adb5bd;
+    background-color: white;
+    text-align: center;
+    position: relative;   /* để đặt tia bên trong ô */
+}
+
+/* Hình bên trong ô */
+.o img {
+    width: 40px;
+    height: 40px;
+}
+
+/* Ô trống (viền ngoài, hoặc ô đã ăn) */
+.o-trong {
+    border: 1px solid #e9ecef;
+    background-color: #e9ecef;
+}
+
+/* Ô đang được chọn */
+.dang-chon {
+    border: 1px solid orange;
+    background-color: #ffe58a;
+}
+
+/* ===== Tia nối ===== */
+/* Mỗi nhánh tia là một thanh màu vàng đặt tuyệt đối trong ô.
+   Tâm ô ở khoảng (21px, 22px), tia dày 6px.
+   Nhánh dài hơn nửa ô một chút để nối liền với ô bên cạnh. */
+.tia {
+    position: absolute;
+    background-color: #ffcc00;
+}
+
+.tia-trai {
+    left: -4px;
+    top: 19px;
+    width: 28px;
+    height: 6px;
+}
+
+.tia-phai {
+    left: 18px;
+    top: 19px;
+    width: 28px;
+    height: 6px;
+}
+
+.tia-tren {
+    left: 18px;
+    top: -4px;
+    width: 6px;
+    height: 29px;
+}
+
+.tia-duoi {
+    left: 18px;
+    top: 19px;
+    width: 6px;
+    height: 31px;
+}
