@@ -154,81 +154,79 @@ function xoaO(h, c) {
     o.addClass("o-trong");
 }
 
-function oTrong(h, c) {
-    if (bang[h][c] == "") {
-        return true;
-    }
-    return false;
-}
-
-function ngangTrong(h, c1, c2) {
-    var tu = c1;
-    var den = c2;
-    if (c1 > c2) {
-        tu = c2;
-        den = c1;
-    }
-
-    for (var c = tu + 1; c < den; c++) {
-        if (oTrong(h, c) == false) {
-            return false;
-        }
-    }
-    return true;
-}
-
-function docTrong(c, h1, h2) {
-    var tu = h1;
-    var den = h2;
-    if (h1 > h2) {
-        tu = h2;
-        den = h1;
-    }
-
-    for (var h = tu + 1; h < den; h++) {
-        if (oTrong(h, c) == false) {
-            return false;
-        }
-    }
-    return true;
-}
-
 function timDuong(h1, c1, h2, c2, coVe) {
-    for (var c = 0; c <= soCot + 1; c++) {
-        var p1Duoc = (c == c1) || oTrong(h1, c);
-        var p2Duoc = (c == c2) || oTrong(h2, c);
-
-        if (p1Duoc && p2Duoc &&
-            ngangTrong(h1, c1, c) &&
-            docTrong(c, h1, h2) &&
-            ngangTrong(h2, c, c2)) {
-            if (coVe == true) {
-                veDuongNoi(h1, c1, h1, c);
-                veDuongNoi(h1, c, h2, c);
-                veDuongNoi(h2, c, h2, c2);
-            }
-            return true;
+    var soDoan = [];
+    var truocH = [];
+    var truocC = [];
+    for (var h = 0; h <= soHang + 1; h++) {
+        soDoan.push([]);
+        truocH.push([]);
+        truocC.push([]);
+        for (var c = 0; c <= soCot + 1; c++) {
+            soDoan[h].push(-1);
+            truocH[h].push(-1);
+            truocC[h].push(-1);
         }
     }
 
-    for (var h = 0; h <= soHang + 1; h++) {
-        var p1Duoc = (h == h1) || oTrong(h, c1);
-        var p2Duoc = (h == h2) || oTrong(h, c2);
+    var huongH = [-1, 1, 0, 0];
+    var huongC = [0, 0, -1, 1];
 
-        if (p1Duoc && p2Duoc &&
-            docTrong(c1, h1, h) &&
-            ngangTrong(h, c1, c2) &&
-            docTrong(c2, h, h2)) {
-            if (coVe == true) {
-                veDuongNoi(h1, c1, h, c1);
-                veDuongNoi(h, c1, h, c2);
-                veDuongNoi(h, c2, h2, c2);
+    var hangDoi = [];
+    hangDoi.push([h1, c1]);
+    soDoan[h1][c1] = 0;
+
+    while (hangDoi.length > 0) {
+        var o = hangDoi.shift();
+        var h = o[0];
+        var c = o[1];
+
+        if (soDoan[h][c] < 3) {
+            for (var k = 0; k < 4; k++) {
+                var hMoi = h + huongH[k];
+                var cMoi = c + huongC[k];
+
+                while (hMoi >= 0 && hMoi <= soHang + 1 && cMoi >= 0 && cMoi <= soCot + 1) {
+                    if (hMoi == h2 && cMoi == c2) {
+                        truocH[h2][c2] = h;
+                        truocC[h2][c2] = c;
+                        if (coVe == true) {
+                            veDuongDi(h1, c1, h2, c2, truocH, truocC);
+                        }
+                        return true;
+                    }
+
+                    if (bang[hMoi][cMoi] != "") {
+                        break;
+                    }
+
+                    if (soDoan[hMoi][cMoi] == -1) {
+                        soDoan[hMoi][cMoi] = soDoan[h][c] + 1;
+                        truocH[hMoi][cMoi] = h;
+                        truocC[hMoi][cMoi] = c;
+                        hangDoi.push([hMoi, cMoi]);
+                    }
+
+                    hMoi = hMoi + huongH[k];
+                    cMoi = cMoi + huongC[k];
+                }
             }
-            return true;
         }
     }
 
     return false;
+}
+
+function veDuongDi(h1, c1, h2, c2, truocH, truocC) {
+    var h = h2;
+    var c = c2;
+    while (h != h1 || c != c1) {
+        var hTruoc = truocH[h][c];
+        var cTruoc = truocC[h][c];
+        veDuongNoi(hTruoc, cTruoc, h, c);
+        h = hTruoc;
+        c = cTruoc;
+    }
 }
 
 function themTia(h, c, huong) {
